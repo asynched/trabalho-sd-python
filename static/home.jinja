@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+</head>
+
+<body>
+  <h1>Home</h1>
+  <p>Confira as informações abaixo</p>
+  <hr />
+
+  <p>Nome: {{ user.name }}</p>
+  <p>Usuário: @{{ user.username }}</p>
+  <p>Tipo: {{ user.role }}</p>
+  <a href="/sign-out">Sair</a>
+  <hr />
+
+  {% if user.role == 'guest' %}
+  <h1>Nenhuma informação a ser apresentada</h1>
+  {% endif %}
+
+  {% if user.role == 'student' %}
+  <form method="POST">
+    <h1>Nota do trabalho</h1>
+    <div>
+      <label for="grade">Nota:</label>
+      <input type="number" name="grade" id="grade" min="0" max="4" value="{{ user.grade }}" />
+    </div>
+    <br>
+    <button>Salvar nota</button>
+  </form>
+  {% endif %}
+
+  {% if user.role == 'teacher' %}
+  <h1>Painel de controle</h1>
+  <ul>
+    {% for student in students %}
+    <li>
+      <p>Nome: {{ student.name }}</p>
+      <p>Usuário: @{{ student.username }}</p>
+      <p>Nota: {{ student.grade }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</body>
+
+</html>
